@@ -1,15 +1,17 @@
 //
-//  ViewController.h
+//  MMMineSweeperTile.m
 //  MMMineSweeper
 //
 //  Created by Timothy Bellay on 10/11/15.
 //  Copyright © 2015 Timothy Bellay. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "MMMineSweeperTile.h"
 
-@interface ViewController : UIViewController
+@interface MMMineSweeperTile ()
+@end
+
+@implementation MMMineSweeperTile
 
 
 @end
-

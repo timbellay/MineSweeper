@@ -9,12 +9,15 @@
 /* Begin PBXBuildFile section */
 		2E36E9221BCB535E00DA62F0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E36E9211BCB535E00DA62F0 /* main.m */; };
 		2E36E9251BCB535E00DA62F0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E36E9241BCB535E00DA62F0 /* AppDelegate.m */; };
-		2E36E9281BCB535E00DA62F0 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E36E9271BCB535E00DA62F0 /* ViewController.m */; };
 		2E36E92B1BCB535E00DA62F0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2E36E9291BCB535E00DA62F0 /* Main.storyboard */; };
 		2E36E92D1BCB535E00DA62F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E36E92C1BCB535E00DA62F0 /* Assets.xcassets */; };
 		2E36E9301BCB535E00DA62F0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2E36E92E1BCB535E00DA62F0 /* LaunchScreen.storyboard */; };
 		2E36E93B1BCB535E00DA62F0 /* MMMineSweeperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E36E93A1BCB535E00DA62F0 /* MMMineSweeperTests.m */; };
 		2E36E9461BCB535E00DA62F0 /* MMMineSweeperUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E36E9451BCB535E00DA62F0 /* MMMineSweeperUITests.m */; };
+		2E36E9551BCB54A300DA62F0 /* MMMineSweeperTile.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E36E9541BCB54A300DA62F0 /* MMMineSweeperTile.m */; };
+		2E36E9591BCB54F800DA62F0 /* MMMineSweeperGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E36E9581BCB54F800DA62F0 /* MMMineSweeperGrid.m */; };
+		2E36E95C1BCB578100DA62F0 /* MMMineSweeperVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E36E95B1BCB578100DA62F0 /* MMMineSweeperVC.m */; };
+		2E36E9621BCB5CB500DA62F0 /* MMMineSweeperTileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E36E9611BCB5CB500DA62F0 /* MMMineSweeperTileView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,8 +42,6 @@
 		2E36E9211BCB535E00DA62F0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2E36E9231BCB535E00DA62F0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		2E36E9241BCB535E00DA62F0 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		2E36E9261BCB535E00DA62F0 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		2E36E9271BCB535E00DA62F0 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		2E36E92A1BCB535E00DA62F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2E36E92C1BCB535E00DA62F0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2E36E92F1BCB535E00DA62F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -51,6 +52,13 @@
 		2E36E9411BCB535E00DA62F0 /* MMMineSweeperUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MMMineSweeperUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E36E9451BCB535E00DA62F0 /* MMMineSweeperUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMMineSweeperUITests.m; sourceTree = "<group>"; };
 		2E36E9471BCB535E00DA62F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2E36E9531BCB54A300DA62F0 /* MMMineSweeperTile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMMineSweeperTile.h; path = Model/MMMineSweeperTile.h; sourceTree = "<group>"; };
+		2E36E9541BCB54A300DA62F0 /* MMMineSweeperTile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMMineSweeperTile.m; path = Model/MMMineSweeperTile.m; sourceTree = "<group>"; };
+		2E36E9571BCB54F800DA62F0 /* MMMineSweeperGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMMineSweeperGrid.h; path = Model/MMMineSweeperGrid.h; sourceTree = "<group>"; };
+		2E36E9581BCB54F800DA62F0 /* MMMineSweeperGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMMineSweeperGrid.m; path = Model/MMMineSweeperGrid.m; sourceTree = "<group>"; };
+		2E36E95A1BCB578100DA62F0 /* MMMineSweeperVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMMineSweeperVC.h; path = "View Controllers/MMMineSweeperVC.h"; sourceTree = "<group>"; };
+		2E36E95B1BCB578100DA62F0 /* MMMineSweeperVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMMineSweeperVC.m; path = "View Controllers/MMMineSweeperVC.m"; sourceTree = "<group>"; };
+		2E36E9611BCB5CB500DA62F0 /* MMMineSweeperTileView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MMMineSweeperTileView.xib; path = Views/MMMineSweeperTileView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,13 +111,14 @@
 			children = (
 				2E36E9231BCB535E00DA62F0 /* AppDelegate.h */,
 				2E36E9241BCB535E00DA62F0 /* AppDelegate.m */,
-				2E36E9261BCB535E00DA62F0 /* ViewController.h */,
-				2E36E9271BCB535E00DA62F0 /* ViewController.m */,
 				2E36E9291BCB535E00DA62F0 /* Main.storyboard */,
 				2E36E92C1BCB535E00DA62F0 /* Assets.xcassets */,
 				2E36E92E1BCB535E00DA62F0 /* LaunchScreen.storyboard */,
 				2E36E9311BCB535E00DA62F0 /* Info.plist */,
 				2E36E9201BCB535E00DA62F0 /* Supporting Files */,
+				2E36E9601BCB5C8000DA62F0 /* Views */,
+				2E36E9561BCB54B100DA62F0 /* Model */,
+				2E36E95D1BCB578B00DA62F0 /* View Controllers */,
 			);
 			path = MMMineSweeper;
 			sourceTree = "<group>";
@@ -138,6 +147,34 @@
 				2E36E9471BCB535E00DA62F0 /* Info.plist */,
 			);
 			path = MMMineSweeperUITests;
+			sourceTree = "<group>";
+		};
+		2E36E9561BCB54B100DA62F0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2E36E9531BCB54A300DA62F0 /* MMMineSweeperTile.h */,
+				2E36E9541BCB54A300DA62F0 /* MMMineSweeperTile.m */,
+				2E36E9571BCB54F800DA62F0 /* MMMineSweeperGrid.h */,
+				2E36E9581BCB54F800DA62F0 /* MMMineSweeperGrid.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		2E36E95D1BCB578B00DA62F0 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				2E36E95A1BCB578100DA62F0 /* MMMineSweeperVC.h */,
+				2E36E95B1BCB578100DA62F0 /* MMMineSweeperVC.m */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		2E36E9601BCB5C8000DA62F0 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2E36E9611BCB5CB500DA62F0 /* MMMineSweeperTileView.xib */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -244,6 +281,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2E36E9301BCB535E00DA62F0 /* LaunchScreen.storyboard in Resources */,
+				2E36E9621BCB5CB500DA62F0 /* MMMineSweeperTileView.xib in Resources */,
 				2E36E92D1BCB535E00DA62F0 /* Assets.xcassets in Resources */,
 				2E36E92B1BCB535E00DA62F0 /* Main.storyboard in Resources */,
 			);
@@ -270,8 +308,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2E36E9281BCB535E00DA62F0 /* ViewController.m in Sources */,
 				2E36E9251BCB535E00DA62F0 /* AppDelegate.m in Sources */,
+				2E36E9551BCB54A300DA62F0 /* MMMineSweeperTile.m in Sources */,
+				2E36E95C1BCB578100DA62F0 /* MMMineSweeperVC.m in Sources */,
+				2E36E9591BCB54F800DA62F0 /* MMMineSweeperGrid.m in Sources */,
 				2E36E9221BCB535E00DA62F0 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
