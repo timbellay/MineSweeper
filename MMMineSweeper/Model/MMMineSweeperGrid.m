@@ -151,9 +151,31 @@
 	return tile.nearbyMineCount;
 };
 
+- (void)didTapTile:(MMMineSweeperTile *)tile {
+	if (tile.hasMine) {
+		NSLog(@"GAME OVER!");
+	} else if (tile && !tile.hasMine && tile.nearbyMineCount > 0) {
+		tile.selected = YES;
+	} else if (tile && !tile.hasMine && tile.nearbyMineCount == 0) {
+		tile.selected = YES;
+		if (!tile.left.hasMine && tile.left.nearbyMineCount == 0 && !tile.left.selected) {
+			[self didTapTile:tile.left];
+		}
+		if (!tile.right.hasMine && tile.right.nearbyMineCount == 0 && !tile.right.selected) {
+			[self didTapTile:tile.right];
+		}
+		if (!tile.up.hasMine && tile.up.nearbyMineCount == 0 && !tile.up.selected) {
+			[self didTapTile:tile.up];
+		}
+		if (!tile.down.hasMine && tile.down.nearbyMineCount == 0 && !tile.down.selected) {
+			[self didTapTile:tile.down];
+		}
+	}
+}
+
 - (void)didTapTileAtRow:(NSInteger)row col:(NSInteger)col {
 	MMMineSweeperTile *tile = [self getTileAtRow:row col:col];
-	tile.selected = YES;
+	[self didTapTile:tile];
 }
 
 
