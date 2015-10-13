@@ -26,8 +26,6 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	[self setupBoard];
-	//	NSDictionary *subscript = [MMMineSweeperGrid convertIndex:36 fromSize:grid.size];
-	//	NSInteger ind = [MMMineSweeperGrid convertSubscript:subscript fromSize:grid.size];
 }
 
 - (void)setupBoard {
@@ -54,7 +52,7 @@
 			UIBezierPath *path = [UIBezierPath bezierPathWithRect:rect];
 			CAShapeLayer *tileLayer = [[CAShapeLayer alloc] init];
 			[tileLayer setPath:path.CGPath];
-			tileLayer.strokeColor = [UIColor orangeColor].CGColor;
+			tileLayer.strokeColor = [UIColor lightGrayColor].CGColor;
 			[self.gridView.layer addSublayer:tileLayer];
 		}
 	}
@@ -62,22 +60,20 @@
 
 - (void)addGridLabels {
 	
-	//=============DEBUG show all tile labels =================
+	if ([self.grid isGodModeOn]) {
 		for (int row = 0; row < self.grid.size.rows; row++) {
 			for (int col = 0; col < self.grid.size.cols; col++){
 				CGRect rect = CGRectMake(col * kTileWidth + kLabelOffset , row * kTileHeight + kLabelOffset, kTileWidth - 2*kLabelOffset, kTileHeight - 2*kLabelOffset);
 				UILabel *label = [[UILabel alloc] initWithFrame:rect];
 				if ([self.grid hasMineAtRow:row col:col]) {
-					label.text = @"✪";
-				} else {
-					label.text = [NSString stringWithFormat:@"%lu",[self.grid getMineCountForTileAtRow:row col:col]];
+					label.text = @"✹";
 				}
 				label.textAlignment = NSTextAlignmentCenter;
-				label.textColor = [UIColor lightGrayColor];
+				label.textColor = [UIColor orangeColor];
 				[self.gridView addSubview:label];
 			}
 		}
-	//=============DEBUG show all tile labels =================
+	}
 	
 	for (int row = 0; row < self.grid.size.rows; row++) {
 		for (int col = 0; col < self.grid.size.cols; col++){
@@ -85,9 +81,11 @@
 				CGRect rect = CGRectMake(col * kTileWidth + kLabelOffset , row * kTileHeight + kLabelOffset, kTileWidth - 2*kLabelOffset, kTileHeight - 2*kLabelOffset);
 				UILabel *label = [[UILabel alloc] initWithFrame:rect];
 				if ([self.grid hasMineAtRow:row col:col]) {
-					label.text = @"✪";
+					label.text = @"✹";
+					label.backgroundColor = [UIColor colorWithRed:1.0f green:0.25f blue:0.25f alpha:0.2f];
 				} else {
 					label.text = [NSString stringWithFormat:@"%lu",[self.grid getMineCountForTileAtRow:row col:col]];
+					label.backgroundColor = [UIColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:0.2f];
 				}
 				label.textAlignment = NSTextAlignmentCenter;
 				label.textColor = [UIColor orangeColor];
@@ -113,17 +111,39 @@
 }
 
 - (void)handleTapGesture:(UITapGestureRecognizer *)tapRecogniser {
-	CGPoint touchLocation = [tapRecogniser locationInView:self.gridView];
-	int row = touchLocation.y / kTileWidth ;
-	int col = touchLocation.x / kTileHeight;
-	if (![self.grid isTileSelectedAtRow:row col:col]) {
-		[self.grid didTapTileAtRow:row col:col];
-		[self redrawBoard];
+	if (![self.grid isGameOver]) {
+		CGPoint touchLocation = [tapRecogniser locationInView:self.gridView];
+		int row = touchLocation.y / kTileWidth ;
+		int col = touchLocation.x / kTileHeight;
+		if (![self.grid isTileSelectedAtRow:row col:col]) {
+			[self.grid didTapTileAtRow:row col:col];
+			[self redrawBoard];
+		}
 	}
 }
 
 - (void)handleLongPressGesture:(UILongPressGestureRecognizer *)longPressRecognizer {
 	NSLog(@"LONG PRESS");
+	if (![self.grid isGameOver]) {
+	
+	}
+}
+- (IBAction)didPressGodMode:(id)sender {
+	[self.grid toggleGodMode];
+	[self redrawBoard];
+}
+
+- (IBAction)didPressRedo:(id)sender {
+	[self setupBoard];
+}
+
+- (IBAction)didPressValidate:(id)sender {
+	if ([self.grid isGameValidated]) {
+		NSLog(@"YOU WIN!");
+	} else {
+		[self redrawBoard];
+		NSLog(@"YOU LOST!");
+	}
 }
 
 @end

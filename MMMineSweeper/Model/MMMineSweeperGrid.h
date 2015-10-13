@@ -22,6 +22,10 @@ typedef struct  {
 - (BOOL)hasMineAtRow:(NSInteger)row col:(NSInteger)col;
 - (void)didTapTileAtRow:(NSInteger)row col:(NSInteger)col;
 - (BOOL)isTileSelectedAtRow:(NSInteger)row col:(NSInteger)col;
+- (BOOL)isGameOver;
+- (BOOL)isGodModeOn;
+- (void)toggleGodMode;
+- (BOOL)isGameValidated;
 + (NSDictionary *)convertIndex:(NSInteger)ind fromSize:(MMSize)size;
 + (NSInteger)convertSubscript:(NSDictionary *)sub fromSize:(MMSize)size;
 @end

@@ -14,10 +14,13 @@
 
 @interface MMMineSweeperGrid ()
 @property (readwrite, assign, nonatomic) MMSize size;
-@property (strong, nonatomic) NSArray *tileGrid;
+@property (strong, nonatomic) NSArray *tileGrid; // of MMMineSweeperTile.
 @property (assign, nonatomic) NSInteger numberOfTiles;
 @property (assign, nonatomic) NSInteger numberOfMines;
 @property (assign, nonatomic) int minesFlagged;
+@property (strong, nonatomic) NSArray *mineLocations; // of NSNumber.
+@property (assign, nonatomic) BOOL gameOver;
+@property (assign, nonatomic) BOOL godModeOn;
 
 + (NSArray *)assignMines:(NSInteger)mineCount toTiles:(NSInteger)tileCount;
 @end
@@ -34,12 +37,14 @@
 	self = [super init];
 
 	if (self) {
+		_gameOver = NO;
+		_godModeOn = NO;
 		_size.rows = rows;
 		_size.cols = cols;
 		_numberOfTiles = self.size.rows * self.size.cols;
 		_numberOfMines = mines;
 		
-		NSArray *minePositions = [[self class] assignMines:self.numberOfMines toTiles:self.numberOfTiles];
+		self.mineLocations = [[self class] assignMines:self.numberOfMines toTiles:self.numberOfTiles];
 		
 		// Setup grid of tiles and mark those have a bomb. TB.
 		NSMutableArray *grid = [[NSMutableArray alloc] initWithCapacity:self.size.cols];
@@ -52,12 +57,12 @@
 				
 				MMMineSweeperTile *tile = [[MMMineSweeperTile alloc] init];
 				tile.selected = NO;
-				if ([minePositions containsObject:[NSNumber numberWithInteger:ind]]) {
+				if ([self.mineLocations containsObject:[NSNumber numberWithInteger:ind]]) {
 					tile.hasMine = YES;
-					NSLog(@"ind: %li MINE", (long)ind); // Debug. TB.
+//					NSLog(@"ind: %li MINE", (long)ind); // Debug. TB.
 				} else {
 					tile.hasMine = NO;
-					NSLog(@"ind: %li", (long)ind);  // Debug. TB.
+//					NSLog(@"ind: %li", (long)ind);  // Debug. TB.
 				}
 				[newRow addObject:tile];
 			}
@@ -153,7 +158,8 @@
 
 - (void)didTapTile:(MMMineSweeperTile *)tile {
 	if (tile.hasMine) {
-		NSLog(@"GAME OVER!");
+		tile.selected = YES;
+		[self endGame];
 	} else if (tile && !tile.hasMine && tile.nearbyMineCount > 0) {
 		tile.selected = YES;
 	} else if (tile && !tile.hasMine && tile.nearbyMineCount == 0) {
@@ -176,6 +182,52 @@
 - (void)didTapTileAtRow:(NSInteger)row col:(NSInteger)col {
 	MMMineSweeperTile *tile = [self getTileAtRow:row col:col];
 	[self didTapTile:tile];
+}
+
+- (void)endGame {
+	for (NSNumber * ind in self.mineLocations) {
+		NSDictionary *subscript = [[self class] convertIndex:ind.integerValue fromSize:self.size];
+		
+		NSNumber *col = [subscript valueForKey:kColKey];
+		NSNumber *row = [subscript valueForKey:kRowKey];
+		
+		MMMineSweeperTile * tile = [self getTileAtRow:row.integerValue col:col.integerValue];
+		tile.selected = YES;
+	}
+	self.gameOver = YES;
+}
+
+- (BOOL)isGameOver {
+	return self.gameOver;
+}
+
+- (BOOL)isGameValidated {
+	NSMutableSet *nonMineLocatons = [[NSMutableSet alloc] initWithCapacity:self.numberOfTiles];
+	for (int i = 0; i < self.numberOfTiles; i++) {
+		NSNumber *index = [NSNumber numberWithInteger:i];
+		[nonMineLocatons addObject:index];
+	}
+	for (NSNumber *index in self.mineLocations) {
+		[nonMineLocatons removeObject:index];
+	}
+	
+	NSSet *selectedTiles = [self getAllSelectedTileIndices];
+	
+	[nonMineLocatons minusSet:selectedTiles];
+	
+	if (nonMineLocatons.count > 0) {
+		[self endGame];
+		return NO;
+	}
+	return YES;
+}
+
+- (BOOL)isGodModeOn {
+	return self.godModeOn;
+}
+
+- (void)toggleGodMode {
+	self.godModeOn = !self.godModeOn;
 }
 
 
@@ -214,6 +266,21 @@
 	NSArray *tileRow = self.tileGrid[row];
 	MMMineSweeperTile *tile = tileRow[col];
 	return tile;
+}
+
+- (NSSet *)getAllSelectedTileIndices {
+	NSMutableSet *selectedTiles = [[NSMutableSet alloc] init];
+	for (int row = 0; row < self.size.rows; row++) {
+		for (int col = 0; col < self.size.cols; col++) {
+			MMMineSweeperTile *tile = [self getTileAtRow:row col:col];
+			if (tile.selected) {
+				NSDictionary *sub = [[self class] makeSubfromRow:row andCol:col];
+				NSInteger ind = [[self class] convertSubscript:sub fromSize:self.size];
+				[selectedTiles addObject:[NSNumber numberWithInteger:ind]];
+			}
+		}
+	}
+	return [selectedTiles copy];
 }
 
 @end

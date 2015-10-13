@@ -26,11 +26,41 @@
                                     <constraint firstAttribute="width" constant="352" id="MSy-lw-rDR"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tmc-zg-s8C">
+                                <rect key="frame" x="440" y="87" width="36" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Redo"/>
+                                <connections>
+                                    <action selector="didPressRedo:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BgU-V0-6gz"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JWc-8p-YF2">
+                                <rect key="frame" x="273" y="483" width="55" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Validate"/>
+                                <connections>
+                                    <action selector="didPressValidate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wPy-Qg-4eF"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hs1-rF-e8H">
+                                <rect key="frame" x="124" y="87" width="72" height="30"/>
+                                <animations/>
+                                <state key="normal" title="God Mode"/>
+                                <connections>
+                                    <action selector="didPressGodMode:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gFu-qt-2mT"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <constraints>
+                            <constraint firstItem="tmc-zg-s8C" firstAttribute="trailing" secondItem="hxI-1i-5tz" secondAttribute="trailing" id="6ZQ-fp-6mh"/>
                             <constraint firstItem="hxI-1i-5tz" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Mmf-bL-A7V"/>
+                            <constraint firstItem="JWc-8p-YF2" firstAttribute="centerX" secondItem="hxI-1i-5tz" secondAttribute="centerX" id="Ndy-Wi-SwX"/>
+                            <constraint firstItem="JWc-8p-YF2" firstAttribute="top" secondItem="hxI-1i-5tz" secondAttribute="bottom" constant="7" id="SaX-Ya-vYE"/>
+                            <constraint firstItem="hxI-1i-5tz" firstAttribute="leading" secondItem="hs1-rF-e8H" secondAttribute="leading" id="all-8d-RLW"/>
+                            <constraint firstItem="hxI-1i-5tz" firstAttribute="top" secondItem="hs1-rF-e8H" secondAttribute="bottom" constant="7" id="daW-R0-prL"/>
                             <constraint firstItem="hxI-1i-5tz" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="s72-Jk-yb1"/>
+                            <constraint firstItem="hxI-1i-5tz" firstAttribute="top" secondItem="tmc-zg-s8C" secondAttribute="bottom" constant="7" id="xTN-kR-Dl3"/>
                         </constraints>
                     </view>
                     <connections>
