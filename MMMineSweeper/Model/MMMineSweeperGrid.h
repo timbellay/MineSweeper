@@ -20,6 +20,8 @@ typedef struct  {
 - (instancetype)init8x8GridWith10mines;
 - (NSInteger)getMineCountForTileAtRow:(NSInteger)row col:(NSInteger)col;
 - (BOOL)hasMineAtRow:(NSInteger)row col:(NSInteger)col;
+- (void)didTapTileAtRow:(NSInteger)row col:(NSInteger)col;
+- (BOOL)isTileSelectedAtRow:(NSInteger)row col:(NSInteger)col;
 + (NSDictionary *)convertIndex:(NSInteger)ind fromSize:(MMSize)size;
 + (NSInteger)convertSubscript:(NSDictionary *)sub fromSize:(MMSize)size;
 @end

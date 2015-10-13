@@ -24,6 +24,8 @@
 
 @implementation MMMineSweeperGrid
 
+#pragma mark - Initialization
+
 - (instancetype)init8x8GridWith10mines {
 	return [self initGridWithRows:8 cols:8 mines:10];
 }
@@ -113,26 +115,13 @@
 		// Set neighborhood mine count for each tile. TB.
 		for (int row = 0; row < self.size.rows; row++) {
 			for (int col = 0; col < self.size.cols; col++) {
-				NSArray *tileRow = self.tileGrid[row];
-				MMMineSweeperTile *tile = tileRow[col];
+				MMMineSweeperTile *tile = [self getTileAtRow:row col:col];
 				tile.nearbyMineCount = tile.leftUp.hasMine + tile.up.hasMine + tile.rightUp.hasMine + tile.right.hasMine + tile.rightDown.hasMine + tile.down.hasMine + tile.leftDown.hasMine + tile.left.hasMine;
 			}
 		}
 	}
 	return self;
 }
-
-- (BOOL)hasMineAtRow:(NSInteger)row col:(NSInteger)col {
-	NSArray *tileRow = self.tileGrid[row];
-	MMMineSweeperTile *tile = tileRow[col];
-	return tile.hasMine;
-}
-
-- (NSInteger)getMineCountForTileAtRow:(NSInteger)row col:(NSInteger)col {
-	NSArray *tileRow = self.tileGrid[row];
-	MMMineSweeperTile *tile = tileRow[col];
-	return tile.nearbyMineCount;
-};
 
 + (NSArray *)assignMines:(NSInteger)mineCount toTiles:(NSInteger)tileCount {
 	NSMutableArray *mines = [[NSMutableArray alloc] init];
@@ -145,6 +134,30 @@
 	return [mines copy];
 }
 
+
+#pragma mark - Game state methods
+- (BOOL)hasMineAtRow:(NSInteger)row col:(NSInteger)col {
+	MMMineSweeperTile *tile = [self getTileAtRow:row col:col];
+	return tile.hasMine;
+}
+
+- (BOOL)isTileSelectedAtRow:(NSInteger)row col:(NSInteger)col {
+	MMMineSweeperTile *tile = [self getTileAtRow:row col:col];
+	return tile.selected;
+}
+
+- (NSInteger)getMineCountForTileAtRow:(NSInteger)row col:(NSInteger)col {
+	MMMineSweeperTile *tile = [self getTileAtRow:row col:col];
+	return tile.nearbyMineCount;
+};
+
+- (void)didTapTileAtRow:(NSInteger)row col:(NSInteger)col {
+	MMMineSweeperTile *tile = [self getTileAtRow:row col:col];
+	tile.selected = YES;
+}
+
+
+#pragma mark Helpers
 + (NSDictionary *)makeSubfromRow:(NSInteger)row andCol:(NSInteger)col {
 	NSMutableDictionary *sub = [[NSMutableDictionary alloc] init];
 	[sub setValue:[NSNumber numberWithInteger:row] forKey:kRowKey];
@@ -173,6 +186,12 @@
 	NSNumber *col = sub[kColKey];
 	NSInteger ind = ((size.rows * row.integerValue) + col.integerValue);
 	return ind;
+}
+
+- (MMMineSweeperTile *)getTileAtRow:(NSInteger)row col:(NSInteger)col {
+	NSArray *tileRow = self.tileGrid[row];
+	MMMineSweeperTile *tile = tileRow[col];
+	return tile;
 }
 
 @end

@@ -24,25 +24,22 @@
 @implementation MMMineSweeperVC
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-	
+	[super viewDidLoad];
 	[self setupBoard];
-	
-	
-	
-//	NSDictionary *subscript = [MMMineSweeperGrid convertIndex:36 fromSize:grid.size];
-//	NSInteger ind = [MMMineSweeperGrid convertSubscript:subscript fromSize:grid.size];
-	
-    // Do any additional setup after loading the view.
+	//	NSDictionary *subscript = [MMMineSweeperGrid convertIndex:36 fromSize:grid.size];
+	//	NSInteger ind = [MMMineSweeperGrid convertSubscript:subscript fromSize:grid.size];
 }
 
 - (void)setupBoard {
 	self.grid = [[MMMineSweeperGrid alloc] init8x8GridWith10mines];
 	[self setupGestureRecognizers];
-	[self redrawBoard];
+	[self drawGrid];
 }
 
 - (void)redrawBoard {
+	for (UIView *view in [self.gridView subviews]) {
+		[view removeFromSuperview];
+	}
 	[self drawGrid];
 	[self addGridLabels];
 }
@@ -65,18 +62,38 @@
 
 - (void)addGridLabels {
 	
+	//=============DEBUG show all tile labels =================
+	//	for (int row = 0; row < self.grid.size.rows; row++) {
+	//		for (int col = 0; col < self.grid.size.cols; col++){
+	//			CGRect rect = CGRectMake(col * kTileWidth + kLabelOffset , row * kTileHeight + kLabelOffset, kTileWidth - 2*kLabelOffset, kTileHeight - 2*kLabelOffset);
+	//			UILabel *label = [[UILabel alloc] initWithFrame:rect];
+	//			if ([self.grid hasMineAtRow:row col:col]) {
+	//				label.text = @"✪";
+	//			} else {
+	//				label.text = [NSString stringWithFormat:@"%lu",[self.grid getMineCountForTileAtRow:row col:col]];
+	//			}
+	//			label.textAlignment = NSTextAlignmentCenter;
+	//			label.textColor = [UIColor orangeColor];
+	//			[self.gridView addSubview:label];
+	//		}
+	//	}
+	//=============DEBUG show all tile labels =================
+	
 	for (int row = 0; row < self.grid.size.rows; row++) {
 		for (int col = 0; col < self.grid.size.cols; col++){
-			CGRect rect = CGRectMake(col * kTileWidth + kLabelOffset , row * kTileHeight + kLabelOffset, kTileWidth - 2*kLabelOffset, kTileHeight - 2*kLabelOffset);
-			UILabel *label = [[UILabel alloc] initWithFrame:rect];
-			if ([self.grid hasMineAtRow:row col:col]) {
-				label.text = @"✪";
-			} else {
-				label.text = [NSString stringWithFormat:@"%lu",[self.grid getMineCountForTileAtRow:row col:col]];
+			if ([self.grid isTileSelectedAtRow:row col:col]) {
+				CGRect rect = CGRectMake(col * kTileWidth + kLabelOffset , row * kTileHeight + kLabelOffset, kTileWidth - 2*kLabelOffset, kTileHeight - 2*kLabelOffset);
+				UILabel *label = [[UILabel alloc] initWithFrame:rect];
+				if ([self.grid hasMineAtRow:row col:col]) {
+					label.text = @"✪";
+				} else {
+					label.text = [NSString stringWithFormat:@"%lu",[self.grid getMineCountForTileAtRow:row col:col]];
+				}
+				label.textAlignment = NSTextAlignmentCenter;
+				label.textColor = [UIColor orangeColor];
+				[self.gridView addSubview:label];
+				
 			}
-			label.textAlignment = NSTextAlignmentCenter;
-			label.textColor = [UIColor orangeColor];
-			[self.gridView addSubview:label];
 		}
 	}
 }
@@ -97,7 +114,17 @@
 }
 
 - (void)handleTapGesture:(UITapGestureRecognizer *)tapRecogniser {
-	NSLog(@"TAP");
+	CGPoint touchLocation = [tapRecogniser locationInView:self.gridView];
+	NSLog(@"X:%f      Y:%f", touchLocation.x, touchLocation.y);
+	
+	int row = touchLocation.y / kTileWidth ;
+	int col = touchLocation.x / kTileHeight;
+	NSLog(@"X:%i      Y:%i", row, col);
+	
+	if (![self.grid isTileSelectedAtRow:row col:col]) {
+		[self.grid didTapTileAtRow:row col:col];
+		[self redrawBoard];
+	}
 }
 
 - (void)handleLongPressGesture:(UILongPressGestureRecognizer *)longPressRecognizer {
