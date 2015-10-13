@@ -8,9 +8,17 @@
 
 #import "MMMineSweeperVC.h"
 #import "MMMineSweeperGrid.h"
+#import "MMMineSweeperTile.h"
 
-@interface MMMineSweeperVC ()
+#define kTileWidth 44.0f
+#define kTileHeight 44.0f
+#define kLabelOffset 2.0f
+
+@interface MMMineSweeperVC () <UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet UIView *gridView;
+@property (strong, nonatomic) MMMineSweeperGrid *grid;
+@property (strong, nonatomic) UITapGestureRecognizer *tapGestureRecognizer;
+@property (strong, nonatomic) UILongPressGestureRecognizer *longPressGestureRecognizer;
 @end
 
 @implementation MMMineSweeperVC
@@ -29,19 +37,71 @@
 }
 
 - (void)setupBoard {
-	MMMineSweeperGrid *grid = [[MMMineSweeperGrid alloc] init8x8GridWith10mines];
-	
-	
-	
+	self.grid = [[MMMineSweeperGrid alloc] init8x8GridWith10mines];
+	[self setupGestureRecognizers];
 	[self redrawBoard];
 }
 
 - (void)redrawBoard {
-	
+	[self drawGrid];
+	[self addGridLabels];
 }
 
-- (void)setupGestureRecognizers {
+- (void)drawGrid {
 	
+	// TODO: resize self.gridView and center when grid is not 8x8. TB.
+	
+	for (int row = 0; row < self.grid.size.rows; row++) {
+		for (int col = 0; col < self.grid.size.cols; col++){
+			CGRect rect = CGRectMake(col * kTileWidth, row * kTileHeight, kTileWidth, kTileHeight);
+			UIBezierPath *path = [UIBezierPath bezierPathWithRect:rect];
+			CAShapeLayer *tileLayer = [[CAShapeLayer alloc] init];
+			[tileLayer setPath:path.CGPath];
+			tileLayer.strokeColor = [UIColor orangeColor].CGColor;
+			[self.gridView.layer addSublayer:tileLayer];
+		}
+	}
+}
+
+- (void)addGridLabels {
+	
+	for (int row = 0; row < self.grid.size.rows; row++) {
+		for (int col = 0; col < self.grid.size.cols; col++){
+			CGRect rect = CGRectMake(col * kTileWidth + kLabelOffset , row * kTileHeight + kLabelOffset, kTileWidth - 2*kLabelOffset, kTileHeight - 2*kLabelOffset);
+			UILabel *label = [[UILabel alloc] initWithFrame:rect];
+			if ([self.grid hasMineAtRow:row col:col]) {
+				label.text = @"✪";
+			} else {
+				label.text = [NSString stringWithFormat:@"%lu",[self.grid getMineCountForTileAtRow:row col:col]];
+			}
+			label.textAlignment = NSTextAlignmentCenter;
+			label.textColor = [UIColor orangeColor];
+			[self.gridView addSubview:label];
+		}
+	}
+}
+
+
+#pragma mark - Gestures
+
+- (void)setupGestureRecognizers {
+	self.tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
+	self.longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGesture:)];
+	[self.gridView addGestureRecognizer:self.tapGestureRecognizer];
+	[self.gridView addGestureRecognizer:self.longPressGestureRecognizer];
+	self.longPressGestureRecognizer.minimumPressDuration = 0.25f;
+}
+
+-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+	return YES;
+}
+
+- (void)handleTapGesture:(UITapGestureRecognizer *)tapRecogniser {
+	NSLog(@"TAP");
+}
+
+- (void)handleLongPressGesture:(UILongPressGestureRecognizer *)longPressRecognizer {
+	NSLog(@"LONG PRESS");
 }
 
 @end

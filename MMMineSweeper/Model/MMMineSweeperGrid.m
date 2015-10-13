@@ -122,6 +122,18 @@
 	return self;
 }
 
+- (BOOL)hasMineAtRow:(NSInteger)row col:(NSInteger)col {
+	NSArray *tileRow = self.tileGrid[row];
+	MMMineSweeperTile *tile = tileRow[col];
+	return tile.hasMine;
+}
+
+- (NSInteger)getMineCountForTileAtRow:(NSInteger)row col:(NSInteger)col {
+	NSArray *tileRow = self.tileGrid[row];
+	MMMineSweeperTile *tile = tileRow[col];
+	return tile.nearbyMineCount;
+};
+
 + (NSArray *)assignMines:(NSInteger)mineCount toTiles:(NSInteger)tileCount {
 	NSMutableArray *mines = [[NSMutableArray alloc] init];
 	do {
