@@ -454,6 +454,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = MMMineSweeper/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.MissionMinds.MMMineSweeper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -465,6 +466,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = MMMineSweeper/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.MissionMinds.MMMineSweeper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -538,6 +540,7 @@
 				2E36E94C1BCB535E00DA62F0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2E36E94D1BCB535E00DA62F0 /* Build configuration list for PBXNativeTarget "MMMineSweeperTests" */ = {
 			isa = XCConfigurationList;
@@ -546,6 +549,7 @@
 				2E36E94F1BCB535E00DA62F0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2E36E9501BCB535E00DA62F0 /* Build configuration list for PBXNativeTarget "MMMineSweeperUITests" */ = {
 			isa = XCConfigurationList;
@@ -554,6 +558,7 @@
 				2E36E9521BCB535E00DA62F0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

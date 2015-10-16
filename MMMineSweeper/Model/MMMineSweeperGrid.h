@@ -21,7 +21,9 @@ typedef struct  {
 - (NSInteger)getMineCountForTileAtRow:(NSInteger)row col:(NSInteger)col;
 - (BOOL)hasMineAtRow:(NSInteger)row col:(NSInteger)col;
 - (void)didTapTileAtRow:(NSInteger)row col:(NSInteger)col;
+- (void)didLongPressTileAtRow:(NSInteger)row col:(NSInteger)col;
 - (BOOL)isTileSelectedAtRow:(NSInteger)row col:(NSInteger)col;
+- (BOOL)isTileFlaggedAtRow:(NSInteger)row col:(NSInteger)col;
 - (BOOL)isGameOver;
 - (BOOL)isGodModeOn;
 - (void)toggleGodMode;

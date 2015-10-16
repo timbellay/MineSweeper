@@ -29,8 +29,11 @@
 
 #pragma mark - Initialization
 
+// TODO: Refactor into MMMineSweeperGrid and MMMineSweeperGame classes. This would be ideal for code reuse. TB.
+
 - (instancetype)init8x8GridWith10mines {
 	return [self initGridWithRows:8 cols:8 mines:10];
+//	return [self initGridWithRows:16 cols:16 mines:10];
 }
 
 - (instancetype)initGridWithRows:(int)rows cols:(int)cols mines:(int)mines {
@@ -70,7 +73,7 @@
 		}
 		self.tileGrid = [grid copy];
 		
-		// Set tile pointers to neighbors. TB.
+		// Set tile pointers for each 8 neighbors. TB.
 		for (int row = 0; row < self.size.rows; row++) {
 			for (int col = 0; col < self.size.cols; col++) {
 				NSArray *tileRow = self.tileGrid[row];
@@ -151,6 +154,12 @@
 	return tile.selected;
 }
 
+- (BOOL)isTileFlaggedAtRow:(NSInteger)row col:(NSInteger)col {
+	MMMineSweeperTile *tile = [self getTileAtRow:row col:col];
+	return tile.flagged;
+}
+
+
 - (NSInteger)getMineCountForTileAtRow:(NSInteger)row col:(NSInteger)col {
 	MMMineSweeperTile *tile = [self getTileAtRow:row col:col];
 	return tile.nearbyMineCount;
@@ -164,17 +173,29 @@
 		tile.selected = YES;
 	} else if (tile && !tile.hasMine && tile.nearbyMineCount == 0) {
 		tile.selected = YES;
-		if (!tile.left.hasMine && tile.left.nearbyMineCount == 0 && !tile.left.selected) {
-			[self didTapTile:tile.left];
+		if (!tile.leftUp.hasMine && !tile.leftUp.selected) {
+			[self didTapTile:tile.leftUp];
 		}
-		if (!tile.right.hasMine && tile.right.nearbyMineCount == 0 && !tile.right.selected) {
-			[self didTapTile:tile.right];
-		}
-		if (!tile.up.hasMine && tile.up.nearbyMineCount == 0 && !tile.up.selected) {
+		if (!tile.up.hasMine && !tile.up.selected) {
 			[self didTapTile:tile.up];
 		}
-		if (!tile.down.hasMine && tile.down.nearbyMineCount == 0 && !tile.down.selected) {
+		if (!tile.rightUp.hasMine && !tile.rightUp.selected) {
+			[self didTapTile:tile.rightUp];
+		}
+		if (!tile.right.hasMine && !tile.right.selected) {
+			[self didTapTile:tile.right];
+		}
+		if (!tile.rightDown.hasMine && !tile.rightDown.selected) {
+			[self didTapTile:tile.rightDown];
+		}
+		if (!tile.down.hasMine && !tile.down.selected) {
 			[self didTapTile:tile.down];
+		}
+		if (!tile.leftDown.hasMine && !tile.leftDown.selected) {
+			[self didTapTile:tile.leftDown];
+		}
+		if (!tile.left.hasMine && !tile.left.selected) {
+			[self didTapTile:tile.left];
 		}
 	}
 }
@@ -183,6 +204,14 @@
 	MMMineSweeperTile *tile = [self getTileAtRow:row col:col];
 	[self didTapTile:tile];
 }
+
+- (void)didLongPressTileAtRow:(NSInteger)row col:(NSInteger)col {
+	MMMineSweeperTile *tile = [self getTileAtRow:row col:col];
+	tile.flagged = !tile.flagged;
+	
+}
+
+
 
 - (void)endGame {
 	for (NSNumber * ind in self.mineLocations) {

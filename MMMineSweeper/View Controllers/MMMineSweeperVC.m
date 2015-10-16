@@ -13,6 +13,8 @@
 #define kTileWidth 44.0f
 #define kTileHeight 44.0f
 #define kLabelOffset 2.0f
+#define kMineLabelText @"✹"
+#define kFlagLabelText @"⚑"
 
 @interface MMMineSweeperVC () <UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet UIView *gridView;
@@ -53,12 +55,41 @@
 			CAShapeLayer *tileLayer = [[CAShapeLayer alloc] init];
 			[tileLayer setPath:path.CGPath];
 			tileLayer.strokeColor = [UIColor lightGrayColor].CGColor;
+			tileLayer.fillColor = [UIColor darkGrayColor].CGColor;
 			[self.gridView.layer addSublayer:tileLayer];
 		}
 	}
 }
 
 - (void)addGridLabels {
+	for (int row = 0; row < self.grid.size.rows; row++) {
+		for (int col = 0; col < self.grid.size.cols; col++){
+			if ([self.grid isTileSelectedAtRow:row col:col]) {
+				CGRect rect = CGRectMake(col * kTileWidth + kLabelOffset , row * kTileHeight + kLabelOffset, kTileWidth - 2*kLabelOffset, kTileHeight - 2*kLabelOffset);
+				UILabel *label = [[UILabel alloc] initWithFrame:rect];
+				if ([self.grid hasMineAtRow:row col:col]) {
+					label.text = kMineLabelText;
+					label.backgroundColor = [UIColor colorWithRed:1.0f green:0.25f blue:0.25f alpha:0.2f];
+					label.textColor = [UIColor orangeColor];
+				} else {
+					label.text = [NSString stringWithFormat:@"%lu",[self.grid getMineCountForTileAtRow:row col:col]];
+					label.backgroundColor = [UIColor colorWithRed:0.5f green:0.5f blue:0.5f alpha:1.0f];
+					label.textColor = [UIColor whiteColor];
+				}
+				label.textAlignment = NSTextAlignmentCenter;
+				[self.gridView addSubview:label];
+			} else if ([self.grid isTileFlaggedAtRow:row col:col]){
+				CGRect rect = CGRectMake(col * kTileWidth + kLabelOffset , row * kTileHeight + kLabelOffset, kTileWidth - 2*kLabelOffset, kTileHeight - 2*kLabelOffset);
+				UILabel *label = [[UILabel alloc] initWithFrame:rect];
+				label.text = kFlagLabelText;
+				label.backgroundColor = [UIColor colorWithRed:0.5f green:0.5f blue:0.5f alpha:1.0f];
+				label.textColor = [UIColor whiteColor];
+				label.textAlignment = NSTextAlignmentCenter;
+				[self.gridView addSubview:label];
+			}
+		}
+	}
+	
 	
 	if ([self.grid isGodModeOn]) {
 		for (int row = 0; row < self.grid.size.rows; row++) {
@@ -66,26 +97,7 @@
 				CGRect rect = CGRectMake(col * kTileWidth + kLabelOffset , row * kTileHeight + kLabelOffset, kTileWidth - 2*kLabelOffset, kTileHeight - 2*kLabelOffset);
 				UILabel *label = [[UILabel alloc] initWithFrame:rect];
 				if ([self.grid hasMineAtRow:row col:col]) {
-					label.text = @"✹";
-				}
-				label.textAlignment = NSTextAlignmentCenter;
-				label.textColor = [UIColor orangeColor];
-				[self.gridView addSubview:label];
-			}
-		}
-	}
-	
-	for (int row = 0; row < self.grid.size.rows; row++) {
-		for (int col = 0; col < self.grid.size.cols; col++){
-			if ([self.grid isTileSelectedAtRow:row col:col]) {
-				CGRect rect = CGRectMake(col * kTileWidth + kLabelOffset , row * kTileHeight + kLabelOffset, kTileWidth - 2*kLabelOffset, kTileHeight - 2*kLabelOffset);
-				UILabel *label = [[UILabel alloc] initWithFrame:rect];
-				if ([self.grid hasMineAtRow:row col:col]) {
-					label.text = @"✹";
-					label.backgroundColor = [UIColor colorWithRed:1.0f green:0.25f blue:0.25f alpha:0.2f];
-				} else {
-					label.text = [NSString stringWithFormat:@"%lu",[self.grid getMineCountForTileAtRow:row col:col]];
-					label.backgroundColor = [UIColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:0.2f];
+					label.text = kMineLabelText;
 				}
 				label.textAlignment = NSTextAlignmentCenter;
 				label.textColor = [UIColor orangeColor];
@@ -123,11 +135,19 @@
 }
 
 - (void)handleLongPressGesture:(UILongPressGestureRecognizer *)longPressRecognizer {
-	NSLog(@"LONG PRESS");
-	if (![self.grid isGameOver]) {
-	
+	if (longPressRecognizer.state == UIGestureRecognizerStateBegan) {
+		if (![self.grid isGameOver]) {
+			CGPoint touchLocation = [longPressRecognizer locationInView:self.gridView];
+			int row = touchLocation.y / kTileWidth ;
+			int col = touchLocation.x / kTileHeight;
+			if (![self.grid isTileSelectedAtRow:row col:col]){
+				[self.grid didLongPressTileAtRow:row col:col];
+				[self redrawBoard];
+			}
+		}
 	}
 }
+
 - (IBAction)didPressGodMode:(id)sender {
 	[self.grid toggleGodMode];
 	[self redrawBoard];
