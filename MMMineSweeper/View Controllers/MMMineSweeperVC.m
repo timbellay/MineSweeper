@@ -10,11 +10,11 @@
 #import "MMMineSweeperGrid.h"
 #import "MMMineSweeperTile.h"
 
-#define kTileWidth 44.0f
-#define kTileHeight 44.0f
-#define kLabelOffset 2.0f
-#define kMineLabelText @"✹"
-#define kFlagLabelText @"⚑"
+static float kTileWidth = 44.0f;
+static float kTileHeight = 44.0f;
+static float kLabelOffset = 2.0f;
+static NSString *kMineLabelText = @"✹";
+static NSString *kFlagLabelText = @"⚑";
 
 @interface MMMineSweeperVC () <UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet UIView *gridView;
@@ -83,7 +83,7 @@
 				UILabel *label = [[UILabel alloc] initWithFrame:rect];
 				label.text = kFlagLabelText;
 				label.backgroundColor = [UIColor colorWithRed:0.5f green:0.5f blue:0.5f alpha:1.0f];
-				label.textColor = [UIColor whiteColor];
+				label.textColor = [UIColor cyanColor];
 				label.textAlignment = NSTextAlignmentCenter;
 				[self.gridView addSubview:label];
 			}
@@ -115,7 +115,7 @@
 	self.longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGesture:)];
 	[self.gridView addGestureRecognizer:self.tapGestureRecognizer];
 	[self.gridView addGestureRecognizer:self.longPressGestureRecognizer];
-	self.longPressGestureRecognizer.minimumPressDuration = 0.25f;
+	self.longPressGestureRecognizer.minimumPressDuration = 0.5f;
 }
 
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
