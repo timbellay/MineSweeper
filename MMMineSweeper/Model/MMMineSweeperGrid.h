@@ -30,4 +30,5 @@ typedef struct  {
 - (BOOL)isGameValidated;
 + (NSDictionary *)convertIndex:(NSInteger)ind fromSize:(MMSize)size;
 + (NSInteger)convertSubscript:(NSDictionary *)sub fromSize:(MMSize)size;
+- (NSInteger)getNumberOfMines;
 @end
