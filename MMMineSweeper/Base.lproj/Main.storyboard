@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9058" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9048"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Mine SweeperVC-->
@@ -17,58 +18,119 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hxI-1i-5tz">
-                                <rect key="frame" x="124" y="124" width="352" height="352"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lUY-uv-xa7" userLabel="Label Stack View">
+                                <rect key="frame" x="20" y="42" width="560" height="20.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="gridLabel" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bAM-OW-D5g" userLabel="gridInfoLabel">
+                                        <rect key="frame" x="0.0" y="0.0" width="236" height="20.5"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="statusLabel" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A4i-0b-w6v" userLabel="statusInfoLabel">
+                                        <rect key="frame" x="236" y="0.0" width="89" height="20.5"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="mineLabel" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="66m-En-JbL" userLabel="mineInfoLabel">
+                                        <rect key="frame" x="325" y="0.0" width="235" height="20.5"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
                                 <animations/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="352" id="Gwn-PJ-0KP"/>
-                                    <constraint firstAttribute="width" constant="352" id="MSy-lw-rDR"/>
+                                    <constraint firstItem="66m-En-JbL" firstAttribute="centerY" secondItem="lUY-uv-xa7" secondAttribute="centerY" id="4uC-Nd-1a4"/>
+                                    <constraint firstItem="A4i-0b-w6v" firstAttribute="centerY" secondItem="lUY-uv-xa7" secondAttribute="centerY" id="Mbb-Kz-A1u"/>
+                                    <constraint firstItem="bAM-OW-D5g" firstAttribute="centerY" secondItem="lUY-uv-xa7" secondAttribute="centerY" id="OUf-Up-NN4"/>
+                                    <constraint firstAttribute="trailing" secondItem="66m-En-JbL" secondAttribute="trailing" id="UgH-zX-ZRN"/>
+                                    <constraint firstItem="A4i-0b-w6v" firstAttribute="centerX" secondItem="lUY-uv-xa7" secondAttribute="centerX" id="rWC-uB-m7g"/>
+                                    <constraint firstItem="bAM-OW-D5g" firstAttribute="leading" secondItem="lUY-uv-xa7" secondAttribute="leading" id="vq3-H6-Avu"/>
                                 </constraints>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tmc-zg-s8C">
-                                <rect key="frame" x="440" y="87" width="36" height="30"/>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="45E-9M-vji" userLabel="Button Stack View">
+                                <rect key="frame" x="20" y="548" width="560" height="30"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hs1-rF-e8H">
+                                        <rect key="frame" x="0.0" y="0.0" width="253" height="30"/>
+                                        <animations/>
+                                        <state key="normal" title="God Mode"/>
+                                        <connections>
+                                            <action selector="didPressGodMode:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gFu-qt-2mT"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JWc-8p-YF2">
+                                        <rect key="frame" x="253" y="0.0" width="55" height="30"/>
+                                        <animations/>
+                                        <state key="normal" title="Validate"/>
+                                        <connections>
+                                            <action selector="didPressValidate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wPy-Qg-4eF"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tmc-zg-s8C">
+                                        <rect key="frame" x="308" y="0.0" width="252" height="30"/>
+                                        <animations/>
+                                        <state key="normal" title="Redo"/>
+                                        <connections>
+                                            <action selector="didPressRedo:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BgU-V0-6gz"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <animations/>
-                                <state key="normal" title="Redo"/>
-                                <connections>
-                                    <action selector="didPressRedo:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BgU-V0-6gz"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JWc-8p-YF2">
-                                <rect key="frame" x="273" y="483" width="55" height="30"/>
+                                <constraints>
+                                    <constraint firstItem="hs1-rF-e8H" firstAttribute="centerY" secondItem="45E-9M-vji" secondAttribute="centerY" id="0bV-Qm-bi2"/>
+                                    <constraint firstItem="JWc-8p-YF2" firstAttribute="centerY" secondItem="45E-9M-vji" secondAttribute="centerY" id="BfF-D9-OnY"/>
+                                    <constraint firstItem="JWc-8p-YF2" firstAttribute="centerX" secondItem="45E-9M-vji" secondAttribute="centerX" id="BvM-ch-ltf"/>
+                                    <constraint firstItem="tmc-zg-s8C" firstAttribute="centerY" secondItem="45E-9M-vji" secondAttribute="centerY" id="FsS-Ai-rr2"/>
+                                    <constraint firstAttribute="trailing" secondItem="tmc-zg-s8C" secondAttribute="trailing" id="Vrw-by-YJD"/>
+                                    <constraint firstItem="hs1-rF-e8H" firstAttribute="leading" secondItem="45E-9M-vji" secondAttribute="leading" id="rgk-dA-wcn"/>
+                                </constraints>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ejZ-Sv-W3W" userLabel="Grid Stack View">
+                                <rect key="frame" x="20" y="70.5" width="560" height="459"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hxI-1i-5tz">
+                                        <rect key="frame" x="0.0" y="0.0" width="560" height="459"/>
+                                        <animations/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="lnP-ve-sBN"/>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="100" id="tLE-SN-yhb"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
                                 <animations/>
-                                <state key="normal" title="Validate"/>
-                                <connections>
-                                    <action selector="didPressValidate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wPy-Qg-4eF"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hs1-rF-e8H">
-                                <rect key="frame" x="124" y="87" width="72" height="30"/>
-                                <animations/>
-                                <state key="normal" title="God Mode"/>
-                                <connections>
-                                    <action selector="didPressGodMode:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gFu-qt-2mT"/>
-                                </connections>
-                            </button>
+                            </stackView>
                         </subviews>
                         <animations/>
                         <constraints>
-                            <constraint firstItem="tmc-zg-s8C" firstAttribute="trailing" secondItem="hxI-1i-5tz" secondAttribute="trailing" id="6ZQ-fp-6mh"/>
-                            <constraint firstItem="hxI-1i-5tz" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Mmf-bL-A7V"/>
-                            <constraint firstItem="JWc-8p-YF2" firstAttribute="centerX" secondItem="hxI-1i-5tz" secondAttribute="centerX" id="Ndy-Wi-SwX"/>
-                            <constraint firstItem="JWc-8p-YF2" firstAttribute="top" secondItem="hxI-1i-5tz" secondAttribute="bottom" constant="7" id="SaX-Ya-vYE"/>
-                            <constraint firstItem="hxI-1i-5tz" firstAttribute="leading" secondItem="hs1-rF-e8H" secondAttribute="leading" id="all-8d-RLW"/>
-                            <constraint firstItem="hxI-1i-5tz" firstAttribute="top" secondItem="hs1-rF-e8H" secondAttribute="bottom" constant="7" id="daW-R0-prL"/>
-                            <constraint firstItem="hxI-1i-5tz" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="s72-Jk-yb1"/>
-                            <constraint firstItem="hxI-1i-5tz" firstAttribute="top" secondItem="tmc-zg-s8C" secondAttribute="bottom" constant="7" id="xTN-kR-Dl3"/>
+                            <constraint firstItem="ejZ-Sv-W3W" firstAttribute="top" secondItem="lUY-uv-xa7" secondAttribute="bottom" constant="8" id="4gM-Bd-V5l"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="lUY-uv-xa7" secondAttribute="trailing" id="CTZ-07-IF4"/>
+                            <constraint firstItem="ejZ-Sv-W3W" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Drj-63-2jD"/>
+                            <constraint firstItem="ejZ-Sv-W3W" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="MxP-Cb-H1P"/>
+                            <constraint firstItem="45E-9M-vji" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="PR7-G0-mcZ"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="45E-9M-vji" secondAttribute="bottom" constant="22" id="YE1-94-Ges"/>
+                            <constraint firstItem="lUY-uv-xa7" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="22" id="ald-Wq-4lD"/>
+                            <constraint firstItem="ejZ-Sv-W3W" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="dyc-xq-AYh"/>
+                            <constraint firstItem="ejZ-Sv-W3W" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="n7R-0c-sl9"/>
+                            <constraint firstItem="lUY-uv-xa7" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="uKo-5P-2Ut"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="45E-9M-vji" secondAttribute="trailing" id="y5F-VE-zzt"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="gridInfoLabel" destination="bAM-OW-D5g" id="OxJ-yI-dE4"/>
                         <outlet property="gridView" destination="hxI-1i-5tz" id="QjC-VB-sZo"/>
+                        <outlet property="mineInfoLabel" destination="66m-En-JbL" id="FfW-xt-IvJ"/>
+                        <outlet property="statusInfoLabel" destination="A4i-0b-w6v" id="xgO-6X-D41"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="850" y="484"/>
         </scene>
     </scenes>
 </document>

@@ -144,6 +144,11 @@
 
 
 #pragma mark - Game state methods
+
+- (NSInteger)getNumberOfMines {
+	return self.numberOfMines;
+}
+
 - (BOOL)hasMineAtRow:(NSInteger)row col:(NSInteger)col {
 	MMMineSweeperTile *tile = [self getTileAtRow:row col:col];
 	return tile.hasMine;

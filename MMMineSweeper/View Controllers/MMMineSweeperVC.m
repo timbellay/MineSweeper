@@ -15,12 +15,25 @@ static float kTileHeight = 44.0f;
 static float kLabelOffset = 2.0f;
 static NSString *kMineLabelText = @"✹";
 static NSString *kFlagLabelText = @"⚑";
+static NSString *kGameStatusPlayText = @"PLAY!";
+static NSString *kGameStatusGameOverText = @"GAME OVER!";
+static NSString *kGAmeStatusVictoryText = @"VICTORY!";
+
+typedef enum : NSUInteger {
+	kGameStatusPlay,
+	kGameStatusGameOver,
+	kGameStatusVictory,
+} MMMineSweeperGameStatus;
 
 @interface MMMineSweeperVC () <UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet UIView *gridView;
 @property (strong, nonatomic) MMMineSweeperGrid *grid;
 @property (strong, nonatomic) UITapGestureRecognizer *tapGestureRecognizer;
 @property (strong, nonatomic) UILongPressGestureRecognizer *longPressGestureRecognizer;
+@property (weak, nonatomic) IBOutlet UILabel *gridInfoLabel;
+@property (weak, nonatomic) IBOutlet UILabel *statusInfoLabel;
+@property (weak, nonatomic) IBOutlet UILabel *mineInfoLabel;
+@property (assign, nonatomic) MMMineSweeperGameStatus gameStatus;
 @end
 
 @implementation MMMineSweeperVC
@@ -31,7 +44,9 @@ static NSString *kFlagLabelText = @"⚑";
 }
 
 - (void)setupBoard {
+	self.view.backgroundColor = [UIColor lightGrayColor];
 	self.grid = [[MMMineSweeperGrid alloc] init8x8GridWith10mines];
+	self.gameStatus = kGameStatusPlay;
 	[self setupGestureRecognizers];
 	[self redrawBoard];
 }
@@ -42,6 +57,32 @@ static NSString *kFlagLabelText = @"⚑";
 	}
 	[self drawGrid];
 	[self addGridLabels];
+	[self redrawStatusLabels];
+}
+
+- (void)redrawStatusLabels {
+	NSString *rowsString = [NSString stringWithFormat:@"%li", (long)self.grid.size.rows];
+	NSString *colsString = [NSString stringWithFormat:@"%li", (long)self.grid.size.cols];
+	NSArray *gridInfoTextArray = [NSArray arrayWithObjects:rowsString, colsString, nil];
+	self.gridInfoLabel.text = [@"Grid:" stringByAppendingString:[gridInfoTextArray componentsJoinedByString:@"x"]];
+	self.mineInfoLabel.text = [@"Mines:" stringByAppendingString:[NSString stringWithFormat:@"%li",(long)[self.grid getNumberOfMines]]];
+	
+	switch (self.gameStatus) {
+		case kGameStatusPlay:
+			self.statusInfoLabel.text = kGameStatusPlayText;
+			self.statusInfoLabel.textColor = [UIColor cyanColor];
+			break;
+		case kGameStatusGameOver:
+			self.statusInfoLabel.text = kGameStatusGameOverText;
+			self.statusInfoLabel.textColor = [UIColor redColor];
+			break;
+		case kGameStatusVictory:
+			self.statusInfoLabel.text = kGAmeStatusVictoryText;
+			self.statusInfoLabel.textColor = [UIColor greenColor];
+			break;
+		default:
+			break;
+	}
 }
 
 - (void)drawGrid {
@@ -132,6 +173,11 @@ static NSString *kFlagLabelText = @"⚑";
 			[self redrawBoard];
 		}
 	}
+	
+	if ([self.grid isGameOver]) { // This is one "code smell" reason why I need to extract game state logic from MMMineSweeperGrid. TB.
+		self.gameStatus = kGameStatusGameOver;
+		[self redrawBoard];
+	}
 }
 
 - (void)handleLongPressGesture:(UILongPressGestureRecognizer *)longPressRecognizer {
@@ -159,8 +205,11 @@ static NSString *kFlagLabelText = @"⚑";
 
 - (IBAction)didPressValidate:(id)sender {
 	if ([self.grid isGameValidated]) {
+		self.gameStatus = kGameStatusVictory;
+		[self redrawStatusLabels];
 		NSLog(@"YOU WIN!");
 	} else {
+		self.gameStatus = kGameStatusGameOver;
 		[self redrawBoard];
 		NSLog(@"YOU LOST!");
 	}
