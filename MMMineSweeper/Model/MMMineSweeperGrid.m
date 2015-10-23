@@ -29,8 +29,6 @@
 
 #pragma mark - Initialization
 
-// TODO: Refactor into MMMineSweeperGrid and MMMineSweeperGame classes. This would be ideal for code reuse. TB.
-
 - (instancetype)init8x8GridWith10mines {
 	return [self initGridWithRows:8 cols:8 mines:10];
 //	return [self initGridWithRows:16 cols:16 mines:10];
@@ -297,8 +295,12 @@
 }
 
 - (MMMineSweeperTile *)getTileAtRow:(NSInteger)row col:(NSInteger)col {
-	NSArray *tileRow = self.tileGrid[row];
-	MMMineSweeperTile *tile = tileRow[col];
+	MMMineSweeperTile *tile;
+	if (row <= self.size.rows && col <= self.size.cols) {
+		NSArray *tileRow = self.tileGrid[row];
+		tile = tileRow[col];
+		return tile;
+	}
 	return tile;
 }
 
