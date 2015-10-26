@@ -31,7 +31,7 @@
 
 - (instancetype)init8x8GridWith10mines {
 	return [self initGridWithRows:8 cols:8 mines:10];
-//	return [self initGridWithRows:16 cols:16 mines:10];
+//	return [self initGridWithRows:16 cols:16 mines:40];
 }
 
 - (instancetype)initGridWithRows:(int)rows cols:(int)cols mines:(int)mines {
