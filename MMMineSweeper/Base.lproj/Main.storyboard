@@ -31,14 +31,14 @@
                                         <rect key="frame" x="236" y="0.0" width="89" height="20.5"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="mineLabel" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="66m-En-JbL" userLabel="mineInfoLabel">
                                         <rect key="frame" x="325" y="0.0" width="235" height="20.5"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -90,10 +90,10 @@
                                     <constraint firstItem="hs1-rF-e8H" firstAttribute="leading" secondItem="45E-9M-vji" secondAttribute="leading" id="rgk-dA-wcn"/>
                                 </constraints>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ejZ-Sv-W3W" userLabel="Grid Stack View">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ejZ-Sv-W3W" userLabel="Scroll Stack View">
                                 <rect key="frame" x="20" y="70.5" width="560" height="459"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hxI-1i-5tz">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hxI-1i-5tz" customClass="UIScrollView">
                                         <rect key="frame" x="0.0" y="0.0" width="560" height="459"/>
                                         <animations/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -123,7 +123,7 @@
                     </view>
                     <connections>
                         <outlet property="gridInfoLabel" destination="bAM-OW-D5g" id="OxJ-yI-dE4"/>
-                        <outlet property="gridView" destination="hxI-1i-5tz" id="QjC-VB-sZo"/>
+                        <outlet property="gridScrollView" destination="hxI-1i-5tz" id="MeC-p9-jvX"/>
                         <outlet property="mineInfoLabel" destination="66m-En-JbL" id="FfW-xt-IvJ"/>
                         <outlet property="statusInfoLabel" destination="A4i-0b-w6v" id="xgO-6X-D41"/>
                     </connections>

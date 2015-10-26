@@ -25,10 +25,10 @@ typedef enum : NSUInteger {
 	kGameStatusVictory,
 } MMMineSweeperGameStatus;
 
-@interface MMMineSweeperVC () <UIGestureRecognizerDelegate>
-@property (weak, nonatomic) IBOutlet UIView *gridView;
+@interface MMMineSweeperVC () <UIScrollViewDelegate, UIGestureRecognizerDelegate>
+@property (weak, nonatomic) IBOutlet UIScrollView *gridScrollView;
+@property (strong, nonatomic) UIView *gridView;
 @property (strong, nonatomic) MMMineSweeperGrid *grid;
-@property (assign, nonatomic) float strechFactor;
 @property (strong, nonatomic) UITapGestureRecognizer *tapGestureRecognizer;
 @property (strong, nonatomic) UILongPressGestureRecognizer *longPressGestureRecognizer;
 @property (weak, nonatomic) IBOutlet UILabel *gridInfoLabel;
@@ -47,6 +47,15 @@ typedef enum : NSUInteger {
 - (void)setupBoard {
 	self.view.backgroundColor = [UIColor lightGrayColor];
 	self.grid = [[MMMineSweeperGrid alloc] init8x8GridWith10mines];
+	self.gridScrollView.delegate = self;
+	self.gridScrollView.backgroundColor = [UIColor lightGrayColor];
+	UIView *parentView = [self.gridScrollView superview];
+	self.gridScrollView.contentSize = CGSizeMake(parentView.frame.size.width * 1.25f, parentView.frame.size.height * 1.25f);
+	self.gridScrollView.contentOffset = CGPointMake(0.0f, 0.0f);
+	self.gridView = [[UIView alloc] initWithFrame:self.gridScrollView.frame];
+	self.gridScrollView.clipsToBounds = YES;
+	[self.gridScrollView addSubview:self.gridView];
+	
 	self.gameStatus = kGameStatusPlay;
 	[self setupGestureRecognizers];
 	[self redrawBoard];
@@ -90,18 +99,9 @@ typedef enum : NSUInteger {
 	
 	// TODO: resize self.gridView and center when grid is not 8x8. TB.
 	
-	NSInteger nrows = self.grid.size.rows;
-	NSInteger ncols = self.grid.size.cols;
-	UIEdgeInsets gridViewMargins = [self.gridView layoutMargins];
-
-	float horizontalStretchFactor = ((self.view.frame.size.width - (2 * (gridViewMargins.left + gridViewMargins.right))) / ncols) / kTileWidth;
-	float verticalStretchFactor = ((self.view.frame.size.height - (2 * (gridViewMargins.left + gridViewMargins.right))) / nrows) / kTileHeight;
-	
-	self.strechFactor = MIN(horizontalStretchFactor, verticalStretchFactor);
-
 	for (int row = 0; row < self.grid.size.rows; row++) {
 		for (int col = 0; col < self.grid.size.cols; col++){
-			CGRect rect = CGRectMake(col * kTileWidth * self.strechFactor, row * kTileHeight * self.strechFactor, kTileWidth * self.strechFactor, kTileHeight * self.strechFactor);
+			CGRect rect = CGRectMake(col * kTileWidth, row * kTileHeight, kTileWidth, kTileHeight);
 			UIBezierPath *path = [UIBezierPath bezierPathWithRect:rect];
 			CAShapeLayer *tileLayer = [[CAShapeLayer alloc] init];
 			[tileLayer setPath:path.CGPath];
@@ -128,7 +128,7 @@ typedef enum : NSUInteger {
 	for (int row = 0; row < self.grid.size.rows; row++) {
 		for (int col = 0; col < self.grid.size.cols; col++){
 			if ([self.grid isTileSelectedAtRow:row col:col]) {
-				CGRect rect = CGRectMake(col * kTileWidth * self.strechFactor  + kLabelOffset , row * kTileHeight * self.strechFactor + kLabelOffset, kTileWidth * self.strechFactor - 2*kLabelOffset, kTileHeight * self.strechFactor - 2*kLabelOffset);
+				CGRect rect = CGRectMake(col * kTileWidth + kLabelOffset , row * kTileHeight + kLabelOffset, kTileWidth - 2 * kLabelOffset, kTileHeight - 2 * kLabelOffset);
 				UILabel *label = [[UILabel alloc] initWithFrame:rect];
 				if ([self.grid hasMineAtRow:row col:col]) {
 					label.text = kMineLabelText;
@@ -142,7 +142,7 @@ typedef enum : NSUInteger {
 				label.textAlignment = NSTextAlignmentCenter;
 				[self.gridView addSubview:label];
 			} else if ([self.grid isTileFlaggedAtRow:row col:col]){
-				CGRect rect = CGRectMake(col * kTileWidth * self.strechFactor + kLabelOffset , row * kTileHeight * self.strechFactor + kLabelOffset, kTileWidth * self.strechFactor - 2*kLabelOffset, kTileHeight * self.strechFactor - 2*kLabelOffset);
+				CGRect rect = CGRectMake(col * kTileWidth + kLabelOffset , row * kTileHeight + kLabelOffset, kTileWidth - 2 * kLabelOffset, kTileHeight - 2 * kLabelOffset);
 				UILabel *label = [[UILabel alloc] initWithFrame:rect];
 				label.text = kFlagLabelText;
 				label.backgroundColor = [UIColor colorWithRed:0.5f green:0.5f blue:0.5f alpha:1.0f];
@@ -157,7 +157,7 @@ typedef enum : NSUInteger {
 	if ([self.grid isGodModeOn]) {
 		for (int row = 0; row < self.grid.size.rows; row++) {
 			for (int col = 0; col < self.grid.size.cols; col++){
-				CGRect rect = CGRectMake(col * kTileWidth * self.strechFactor + kLabelOffset , row * kTileHeight * self.strechFactor + kLabelOffset, kTileWidth * self.strechFactor - 2*kLabelOffset, kTileHeight * self.strechFactor - 2*kLabelOffset);
+				CGRect rect = CGRectMake(col * kTileWidth + kLabelOffset , row * kTileHeight + kLabelOffset, kTileWidth - 2 * kLabelOffset, kTileHeight - 2 * kLabelOffset);
 				UILabel *label = [[UILabel alloc] initWithFrame:rect];
 				if ([self.grid hasMineAtRow:row col:col]) {
 					label.text = kMineLabelText;
